@@ -22,44 +22,21 @@ public class Main {
         System.out.println("----------------------------------");
         System.out.println("REGISTRO DE CALIFICACIONES FINALES");
         System.out.println("----------------------------------");
-        int op = -1;
+
         boolean escaneable = true; // validaciones, para saber si ya seleccionó una opción antes
         List<Estudiante> alumnos = csv.read();
+        if(escaneable){
+            System.out.println("1) INGRESAR CALIFACIONES");
+        }
+        System.out.println("4) SALIR");
+        int op = scanner.nextInt();
+
+
         while (op != 4) {
-            if(escaneable){
-                System.out.println("1) INGRESAR CALIFACIONES");
-            }
-
-            if(!escaneable){
-                System.out.println("2) GENERAR REPORTE DE CALIFICACIONES");
-            }
-
-            if(!escaneable) {
-                System.out.println("3) GENERAR PDF (TODAVIA NO FUNCIONAL)");
-            }
-            System.out.println("4) SALIR");
-            op = scanner.nextInt();
-            if(op == 1){
-                if(!escaneable){
-                    System.out.println("No valido");
-                    continue;
-                }
-            }
-
-            else if(op == 2){
-                if(escaneable){
-                System.out.println("No valido");
-                    continue;
-                }
-
-            }
-
-            if(op >= 4){
-                System.exit(0);
-            }
 
             switch (op) {
                 case 1:
+
                     escaneable = false;
                     for (Estudiante alumno : alumnos) {
                         int grade = 0;
@@ -93,10 +70,43 @@ public class Main {
                     }
                     break;
                 case 3:
-                    System.out.println("nada");
+                    PDF.generar(alumnos, "out/Reporte_Calificaciones.pdf");
+
                     break;
-                default:
-                    break;
+            }
+            if(!escaneable){
+                System.out.println("2) GENERAR REPORTE DE CALIFICACIONES");
+            }
+            if(!escaneable) {
+                System.out.println("3) GENERAR PDF");
+            }
+            System.out.println("4) SALIR");
+            while(true) {
+                op = scanner.nextInt();
+                if (op == 1) {
+                    if (!escaneable) {
+                        System.out.println("No valido");
+                        continue;
+                    } else{
+                        break;
+                    }
+                }
+
+                if (op == 2) {
+                    if (escaneable) {
+                        System.out.println("No valido");
+                        continue;
+                    } else{
+                        break;
+                    }
+
+                }
+
+                if(op == 3) break;
+
+                if (op >= 4) {
+                    System.exit(0);
+                }
             }
 
 
@@ -104,6 +114,4 @@ public class Main {
 
         }
     }
-
-
 }
