@@ -41,7 +41,8 @@ public class PDF {
                 table.addCell(e.getMatricula());
                 table.addCell(e.getFullName());
                 table.addCell("Diseño de Software");
-                table.addCell(String.valueOf(e.getGrade()));
+                String calificacion = (e.getGrade() == 0) ? "S/C" : String.valueOf(e.getGrade());
+                table.addCell(calificacion);
             }
 
             doc.add(table);

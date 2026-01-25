@@ -43,7 +43,8 @@ public class CSV {
     public void generarReporte(List<Estudiante> lista) {
         try (PrintWriter archivoSalida = new PrintWriter(new FileWriter(RUTA_DEST))) {
             for (Estudiante e : lista) {
-                archivoSalida.println(e.getMatricula() + ",Diseño de Software," + e.getGrade());
+                String calificacionFinal = (e.getGrade() == 0) ? "S/C" : String.valueOf(e.getGrade());
+                archivoSalida.println(e.getMatricula() + ",Diseño de Software," + calificacionFinal);
             }
             JOptionPane.showMessageDialog(null, "Archivo generado con éxito.");
         } catch (IOException e) {
@@ -65,7 +66,7 @@ public class CSV {
             while ((linea = lector.readLine()) != null) {
                 partes = linea.split(",");
                 if (partes.length >= 2) {
-                    if (Objects.equals(partes[0], usuario) && Objects.equals(partes[1], con)) {
+                    if (partes[0].trim().equals(usuario) && partes[1].trim().equals(con)) {
                         lector.close();
                         return true;
                     }
