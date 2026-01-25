@@ -38,22 +38,33 @@ public class Main {
                 case 1:
 
                     escaneable = false;
+                    scanner.nextLine();
                     for (Estudiante alumno : alumnos) {
-                        int grade = 0;
-                        while (grade < 1 || grade > 100) {
-                            System.out.print("Calificación de " + alumno.getFullName() + ": ");
-                            try {
-                                //grade = Integer.parseInt(scanner.nextLine());
-                                grade = scanner.nextInt();
-                                if (grade < 1 || grade > 100) {
-                                    System.out.println("La calificacion debe ser valida (1-100).");
+                        boolean datoValido = false;
+
+                        while (!datoValido) {
+                            System.out.print("Calificación de " + alumno.getFullName() + " : ");
+                            String entrada = scanner.nextLine().trim();
+
+                            if (entrada.isEmpty()) {
+                                alumno.setGrade(0); // 0 es no calificado
+                                datoValido = true;
+                            } else {
+                                try {
+                                    int grade = Integer.parseInt(entrada);
+                                    if (grade >= 1 && grade <= 100) {
+                                        alumno.setGrade(grade);
+                                        datoValido = true;
+                                    } else {
+                                        System.out.println("La calificación debe estar dentro del rango entre 1 y 100.");
+                                    }
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Ingrese un número entero válido o deje vacío.");
                                 }
-                            } catch (NumberFormatException e) {
-                                System.out.println("El dato debe ser un número entero.");
                             }
                         }
-                        alumno.setGrade(grade);
                     }
+                    break;
                     break;
                 case 2:
                     boolean allGraded = true;
